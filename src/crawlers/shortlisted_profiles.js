@@ -1,14 +1,13 @@
 import { Crawler } from "./common/crawler"
 
-export class Test extends Crawler {
+export class ShortlistedProfiles extends Crawler {
 
-	constructor (initialUrl) {
-		super (initialUrl);
-	}
+    constructor (initialUrl, params) {
+        super (initialUrl, params);
+    }
 
-	run () {
-	
-		this.clickLink({
+    run () {
+        this.clickLink({
             stepDescription: 'Navigate to Shortlisted profiles page',
             selector: '#fixed-div_search > div.fleft.paddl20 > a:nth-child(3)'
         });
@@ -18,7 +17,5 @@ export class Test extends Crawler {
             this.echo(shortlistedHref);
             this.download(shortlistedHref, crawler.config.dirs.downloads + '/shortlistedProfiles.xls');
         });
-	}
+    }
 }
-
-var a  = new Test('http://www.tamilmatrimony.com/');

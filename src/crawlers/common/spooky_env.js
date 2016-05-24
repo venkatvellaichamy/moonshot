@@ -1,10 +1,13 @@
 import Spooky from "spooky";
+import util from "utils";
 import spookyConfig from "../../configs/spooky_config";
+
+// let instance = null;
 
 export class SpookyEnv {
 	constructor (url, actionid) {
 		this.url = url;
-		this.actionid = actionid;
+        this.actionid = actionid;
 
 		try {
 			this.spooky = new Spooky (spookyConfig, this._onCreated.bind(this));
@@ -13,32 +16,38 @@ export class SpookyEnv {
 
 			console.log ("spooky environment initialized");
 
-			//this.spooky.on('error', this._logErrors.bind(this));
-		    //this.spooky.on('console', this._logConsoleMessages.bind(this));
-		    //this.spooky.on('log', this._logLogs.bind(this));
+			this.spooky.on('error', this._logErrors.bind(this));
+		    this.spooky.on('console', this._logConsoleMessages.bind(this));
+		    this.spooky.on('log', this._logLogs.bind(this));
 		} catch (e) {
 			console.dir (e);
 			console.trace ("spooky failed to initialize")
 		}
+
+        // if (!instance) {
+        //     instance = this;
+        // }
+
+        // return instance;
 	}
 
 	_logErrors (error) {
         error = error.data ? error.data : error;
         this.spooky.errors.push(error);
-        if (this.spooky.debug) {
+        if (spookyConfig.debug) {
             console.error('spooky error', util.inspect(error));
         }
     }
 
     _logConsoleMessages (line) {
         this.spooky.console.push(line);
-        if (this.spooky.debug) {
+        if (spookyConfig.console) {
             console.log(line);
         }
     }
 
     _logLogs (entry) {
-        if (!this.spooky.debug) { return; }
+        if (!spookyConfig.logs) { return; }
         var message = entry.message;
         var event = (message.event || '').toLowerCase();
 
@@ -61,8 +70,7 @@ export class SpookyEnv {
         }
 
         this.spooky.start(this.url);
-        this.spooky.emit(this.actionid);
-        
+        this.spooky.emit(this.actionid)
         this.spooky.run();
     }
 }

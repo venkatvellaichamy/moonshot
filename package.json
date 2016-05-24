@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/venkatvellaichamy/moonshot#readme",
   "dependencies": {
-    "spooky": "^0.2.5"
+    "spooky": "^0.2.5",
+    "utils": "^0.3.1"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
