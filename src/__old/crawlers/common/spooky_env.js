@@ -70,7 +70,7 @@ export class SpookyEnv {
         }
 
         this.spooky.start(this.url);
-        this.spooky.emit(this.actionid)
+        this.spooky.emit(this.actionid);
         this.spooky.run();
     }
 }

@@ -16,6 +16,18 @@ module.exports = function(grunt) {
                     "ext": ".js"
                 }]
 			}
+		},
+
+		watch: {
+			scripts: {
+				files: ["src/**/*.js"],
+				tasks: ["babel"],
+				options: {
+					interrupt: true,
+					spawn: false,
+					debounceDelay: 250
+				}
+			}
 		}
 	});
 
